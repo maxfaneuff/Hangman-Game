@@ -41,7 +41,9 @@ window.onload = function() {
 	// wordElement.innerHTML = correctGuesses.join(" ");
 	// letterCount.innerHTML = guessNum;
 document.onkeyup = function(event) {
+	var guessLeft = document.getElementById("guessNum");
 	var letterCount = document.getElementById("wrongGuess");
+	
 	var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
 	console.log(userGuess);
 		console.log("---selected letter---");
@@ -52,6 +54,7 @@ document.onkeyup = function(event) {
 	} else {
 		wrongGuess.push(userGuess);
 		guessNum--;
+		guessLeft.innerHTML = guessNum;
 		console.log(guessNum);
 		console.log(false);
 		console.log("--------");
