@@ -6,11 +6,13 @@ var guessNum;
 var rightGuess;
 var wrongGuess;
 var wins;
+var chosenWord;
+var wordToDisplay = "";
 
 var lettersGuessed = document.getElementById("wrongGuess");
 
 
-var word = ["antelope", "kangaroo", "elephant"];
+var words = ["antelope", "kangaroo", "elephant"];
 var availLetters = "abcdefghijklmnopqrstuvwxyz";
 var guessNum = 12;
 
@@ -18,9 +20,10 @@ var guessNum = 12;
 //Functions//
 
 window.onload = function() {
+	console.log("window.onload");
 	var wordElement = document.getElementById("word");
 
-	chosenWord = word[Math.floor(Math.random() * word.length)];
+	chosenWord = words[Math.floor(Math.random() * words.length)];
 	console.log(chosenWord);
 	console.log("---Chosen word---")
 	guessNum = 12;
@@ -29,17 +32,33 @@ window.onload = function() {
 	for (var i = 0; i < chosenWord.length; i++) {
 		rightGuess.push(chosenWord[i]);
 		console.log(rightGuess);
+		wordToDisplay += "_"
 		}
 
-	for (var i = 0; i < chosenWord.length; i++) {
-		var dashes = document.createElement("div");
-		dashes.innerHTML = "_";
-		wordElement.appendChild(dashes);
-	}
+	// for (var i = 0; i < chosenWord.length; i++) {
+	// 	// dashes.innerHTML = "_";
+	// }
+	var word = document.createElement("div");
+	word.innerHTML = wordToDisplay;
+	wordElement.appendChild(word);
 };	
 
 	// wordElement.innerHTML = correctGuesses.join(" ");
 	// letterCount.innerHTML = guessNum;
+function displayLetters (userGuess) {
+	var wordToDisplayArr = wordToDisplay.split("")
+	for (var i = 0; i < chosenWord.length; i++) {
+		if(userGuess === chosenWord[i]) {
+			// wordToDisplay += userGuess;
+			wordToDisplayArr[i] = userGuess;
+		}
+	}
+	console.log("---wordToDisplayArr---");
+	console.log(wordToDisplayArr);
+	wordToDisplay = wordToDisplayArr.join("");
+	return wordToDisplay;
+}
+
 document.onkeyup = function(event) {
 	var guessLeft = document.getElementById("guessNum");
 	var letterCount = document.getElementById("wrongGuess");
@@ -51,6 +70,10 @@ document.onkeyup = function(event) {
 
 	if((chosenWord.indexOf(userGuess) != -1)) {
 		console.log(true);
+		var wordElement = document.getElementById("word");
+		var wordDisplaying = displayLetters(userGuess);
+		console.log(wordDisplaying);
+		wordElement.innerHTML = wordDisplaying;
 	} else {
 		wrongGuess.push(userGuess);
 		guessNum--;
